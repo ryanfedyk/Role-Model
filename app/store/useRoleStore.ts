@@ -1,56 +1,63 @@
 import { create } from "zustand";
 
-export type AutomationDepth = "copilot" | "autopilot";
+export type Era = "2025" | "2027" | "2030" | "2035";
+export type Archetype = "maker" | "researcher" | "strategist";
 
-export interface SliderConfig {
-  aestheticDirection: number;
-  systemsArchitecture: number;
-  agentOrchestration: number;
-  ethicalGovernance: number;
-  technicalSynthesis: number;
-  strategicStorytelling: number;
+export interface TimelineScene {
+  time: string;
+  title: string;
+  text: string;
 }
 
-export interface RoleOutput {
-  archetype: string;
-  purposeStatement: string;
-  dayInTheLife: string;
-  careerLadder: string;
-  collaborationMatrix: string;
-  ownershipModel: string;
-  humanLeverageScore: number;
-  humanLeverageFormula: string;
+export interface CollabCard {
+  team: string;
+  rel: string;
+}
+
+export interface CareerLevel {
+  title: string;
+  desc: string;
+}
+
+export interface FieldGuideOutput {
+  eyebrow: string;
+  headline: string;
+  roleTitle: string;
+  portrait: string[];
+  dayInLife: TimelineScene[];
+  collabOverview: string;
+  collabCards: CollabCard[];
+  pullQuote: string;
+  bodyClose: string;
+  careerArc: {
+    entry: CareerLevel;
+    senior: CareerLevel;
+    exec: CareerLevel;
+  };
+  futureProof: string;
 }
 
 interface RoleStore {
-  sliders: SliderConfig;
-  automationDepth: AutomationDepth;
-  output: RoleOutput | null;
+  era: Era;
+  archetype: Archetype;
+  output: FieldGuideOutput | null;
   isGenerating: boolean;
   error: string | null;
-  setSlider: (key: keyof SliderConfig, value: number) => void;
-  setAutomationDepth: (depth: AutomationDepth) => void;
-  setOutput: (output: RoleOutput | null) => void;
+  setEra: (era: Era) => void;
+  setArchetype: (archetype: Archetype) => void;
+  setOutput: (output: FieldGuideOutput | null) => void;
   setIsGenerating: (v: boolean) => void;
   setError: (e: string | null) => void;
 }
 
 export const useRoleStore = create<RoleStore>((set) => ({
-  sliders: {
-    aestheticDirection: 50,
-    systemsArchitecture: 50,
-    agentOrchestration: 50,
-    ethicalGovernance: 50,
-    technicalSynthesis: 50,
-    strategicStorytelling: 50,
-  },
-  automationDepth: "copilot",
+  era: "2030",
+  archetype: "maker",
   output: null,
   isGenerating: false,
   error: null,
-  setSlider: (key, value) =>
-    set((s) => ({ sliders: { ...s.sliders, [key]: value } })),
-  setAutomationDepth: (depth) => set({ automationDepth: depth }),
+  setEra: (era) => set({ era }),
+  setArchetype: (archetype) => set({ archetype }),
   setOutput: (output) => set({ output }),
   setIsGenerating: (v) => set({ isGenerating: v }),
   setError: (e) => set({ error: e }),
