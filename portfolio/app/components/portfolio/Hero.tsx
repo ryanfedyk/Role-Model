@@ -4,6 +4,21 @@ import { useEffect, useRef, useState } from "react";
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%!&*";
 const HEADLINE = "DESIGNING EXPERIENCES TO IMPROVE PEOPLES LIVES";
 
+const REEL = [
+  "/assets/generativebackgrounds.gif",
+  "/assets/agenticcommerce.gif",
+  "/assets/shoppingaipathways.gif",
+  "/assets/portraitframing.gif",
+  "/assets/dynamiclayouts.gif",
+  "/assets/outfitagent.gif",
+  "/assets/aienhancedmeetings.gif",
+  "/assets/eduvision.gif",
+  "/assets/geminimeetings.gif",
+  "/assets/reactions.gif",
+  "/assets/disinfohighleverage.gif",
+  "/assets/roomsvisoin.gif",
+];
+
 function useScramble(text: string, delay = 600) {
   const [display, setDisplay] = useState(
     () => text.split("").map(c => c === " " ? " " : CHARS[Math.floor(Math.random() * CHARS.length)]).join("")
@@ -47,20 +62,18 @@ function useScramble(text: string, delay = 600) {
 
 function GridBackground() {
   return (
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        backgroundImage: `
-          linear-gradient(rgba(77,124,255,0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(77,124,255,0.04) 1px, transparent 1px)
-        `,
-        backgroundSize: "60px 60px",
-        animation: "grid-drift 8s linear infinite",
-        maskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
-        WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
-      }}
-    />
+    <div style={{
+      position: "absolute",
+      inset: 0,
+      backgroundImage: `
+        linear-gradient(rgba(77,124,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77,124,255,0.04) 1px, transparent 1px)
+      `,
+      backgroundSize: "60px 60px",
+      animation: "grid-drift 8s linear infinite",
+      maskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
+      WebkitMaskImage: "radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%)",
+    }} />
   );
 }
 
@@ -68,39 +81,62 @@ function FloatingOrbs() {
   return (
     <>
       <div style={{
-        position: "absolute",
-        top: "15%",
-        left: "8%",
-        width: 400,
-        height: 400,
+        position: "absolute", top: "15%", left: "8%", width: 400, height: 400,
         borderRadius: "50%",
         background: "radial-gradient(circle, rgba(77,124,255,0.12) 0%, transparent 70%)",
-        animation: "orb-1 12s ease-in-out infinite",
-        pointerEvents: "none",
+        animation: "orb-1 12s ease-in-out infinite", pointerEvents: "none",
       }} />
       <div style={{
-        position: "absolute",
-        bottom: "20%",
-        right: "5%",
-        width: 500,
-        height: 500,
+        position: "absolute", bottom: "20%", right: "5%", width: 500, height: 500,
         borderRadius: "50%",
         background: "radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%)",
-        animation: "orb-2 16s ease-in-out infinite",
-        pointerEvents: "none",
+        animation: "orb-2 16s ease-in-out infinite", pointerEvents: "none",
       }} />
       <div style={{
-        position: "absolute",
-        top: "50%",
-        right: "20%",
-        width: 200,
-        height: 200,
+        position: "absolute", top: "50%", right: "20%", width: 200, height: 200,
         borderRadius: "50%",
         background: "radial-gradient(circle, rgba(6,214,160,0.07) 0%, transparent 70%)",
-        animation: "orb-1 20s ease-in-out infinite reverse",
-        pointerEvents: "none",
+        animation: "orb-1 20s ease-in-out infinite reverse", pointerEvents: "none",
       }} />
     </>
+  );
+}
+
+function MediaReel() {
+  const doubled = [...REEL, ...REEL];
+  return (
+    <div style={{
+      position: "absolute",
+      bottom: 88,
+      left: 0,
+      right: 0,
+      height: 130,
+      overflow: "hidden",
+      maskImage: "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
+      WebkitMaskImage: "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)",
+      pointerEvents: "none",
+    }}>
+      <div style={{
+        display: "flex",
+        gap: 10,
+        animation: "marquee 45s linear infinite",
+        width: "max-content",
+      }}>
+        {doubled.map((src, i) => (
+          <div key={i} style={{
+            width: 210,
+            height: 120,
+            borderRadius: 8,
+            overflow: "hidden",
+            flexShrink: 0,
+            border: "1px solid rgba(255,255,255,0.06)",
+            opacity: 0.65,
+          }}>
+            <img src={src} loading="lazy" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -131,73 +167,55 @@ export default function Hero() {
         justifyContent: "center",
         overflow: "hidden",
         background: "var(--bg)",
-        padding: "80px clamp(24px, 6vw, 120px) 60px",
+        padding: "80px clamp(24px, 6vw, 120px) 240px",
       }}
     >
       <GridBackground />
       <FloatingOrbs />
 
-      {/* Scan line */}
       <div style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 1,
+        position: "absolute", top: 0, left: 0, right: 0, height: 1,
         background: "linear-gradient(90deg, transparent, rgba(77,124,255,0.4), transparent)",
         animation: "scan-line 6s linear infinite",
         pointerEvents: "none",
       }} />
 
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", maxWidth: 1100 }}>
-        {/* Label */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            marginBottom: 48,
-            padding: "6px 16px",
-            border: "1px solid rgba(77,124,255,0.25)",
-            borderRadius: 100,
-            background: "rgba(77,124,255,0.06)",
-            animation: "fade-up 0.6s ease 0.2s both",
-          }}
-        >
+        <div style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 8,
+          marginBottom: 48,
+          padding: "6px 16px",
+          border: "1px solid rgba(77,124,255,0.25)",
+          borderRadius: 100,
+          background: "rgba(77,124,255,0.06)",
+          animation: "fade-up 0.6s ease 0.2s both",
+        }}>
           <span style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "#06d6a0",
-            boxShadow: "0 0 8px #06d6a0",
-            display: "inline-block",
-            animation: "pulse-ring 2s ease infinite",
+            width: 6, height: 6, borderRadius: "50%",
+            background: "#06d6a0", boxShadow: "0 0 8px #06d6a0",
+            display: "inline-block", animation: "pulse-ring 2s ease infinite",
           }} />
           <span style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            color: "var(--text-muted)",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
+            fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-muted)",
+            letterSpacing: "0.15em", textTransform: "uppercase",
           }}>
             Google · Jigsaw · Microsoft · NYU · 10+ years
           </span>
         </div>
 
-        {/* Main headline */}
-        <h1
-          style={{
-            fontFamily: "var(--font-space)",
-            fontWeight: 800,
-            fontSize: "clamp(42px, 7vw, 100px)",
-            lineHeight: 1.0,
-            letterSpacing: "-0.03em",
-            color: "var(--text)",
-            marginBottom: 32,
-            animation: "fade-up 0.6s ease 0.3s both",
-            wordBreak: "break-word",
-          }}
-        >
+        <h1 style={{
+          fontFamily: "var(--font-space)",
+          fontWeight: 800,
+          fontSize: "clamp(42px, 7vw, 100px)",
+          lineHeight: 1.0,
+          letterSpacing: "-0.03em",
+          color: "var(--text)",
+          marginBottom: 32,
+          animation: "fade-up 0.6s ease 0.3s both",
+          wordBreak: "break-word",
+        }}>
           {headline.split(" ").map((word, i) => {
             const colorWords = ["EXPERIENCES", "PEOPLES", "LIVES"];
             const isAccent = colorWords.includes(word);
@@ -216,36 +234,30 @@ export default function Hero() {
           })}
         </h1>
 
-        {/* Sub */}
-        <p
-          style={{
-            fontSize: "clamp(16px, 2vw, 22px)",
-            color: "var(--text-muted)",
-            maxWidth: 640,
-            margin: "0 auto 48px",
-            lineHeight: 1.6,
-            fontWeight: 400,
-            opacity: showSub ? 1 : 0,
-            transform: showSub ? "translateY(0)" : "translateY(12px)",
-            transition: "opacity 0.7s ease, transform 0.7s ease",
-          }}
-        >
+        <p style={{
+          fontSize: "clamp(16px, 2vw, 22px)",
+          color: "var(--text-muted)",
+          maxWidth: 640,
+          margin: "0 auto 48px",
+          lineHeight: 1.6,
+          fontWeight: 400,
+          opacity: showSub ? 1 : 0,
+          transform: showSub ? "translateY(0)" : "translateY(12px)",
+          transition: "opacity 0.7s ease, transform 0.7s ease",
+        }}>
           UX Design leader who transforms legacy products into AI-forward platforms.
           Stories are at the foundation of everything I build.
         </p>
 
-        {/* CTAs */}
-        <div
-          style={{
-            display: "flex",
-            gap: 16,
-            justifyContent: "center",
-            flexWrap: "wrap",
-            opacity: showCta ? 1 : 0,
-            transform: showCta ? "translateY(0)" : "translateY(12px)",
-            transition: "opacity 0.7s ease, transform 0.7s ease",
-          }}
-        >
+        <div style={{
+          display: "flex",
+          gap: 16,
+          justifyContent: "center",
+          flexWrap: "wrap",
+          opacity: showCta ? 1 : 0,
+          transform: showCta ? "translateY(0)" : "translateY(12px)",
+          transition: "opacity 0.7s ease, transform 0.7s ease",
+        }}>
           <button
             onClick={scrollToWork}
             data-cursor
@@ -260,7 +272,7 @@ export default function Hero() {
               fontSize: 15,
               fontWeight: 600,
               letterSpacing: "0.02em",
-              transition: "transform 0.2s, box-shadow 0.2s, opacity 0.2s",
+              transition: "transform 0.2s, box-shadow 0.2s",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
@@ -270,9 +282,7 @@ export default function Hero() {
               e.currentTarget.style.transform = "translateY(0)";
               e.currentTarget.style.boxShadow = "none";
             }}
-          >
-            See the work
-          </button>
+          >See the work</button>
           <a
             href="https://www.linkedin.com/in/ryanfedyk/"
             target="_blank"
@@ -300,36 +310,30 @@ export default function Hero() {
               e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)";
               e.currentTarget.style.color = "var(--text-muted)";
             }}
-          >
-            LinkedIn
-          </a>
+          >LinkedIn</a>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 40,
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 8,
-          animation: "fade-in 1s ease 3s both",
-        }}
-      >
+      <MediaReel />
+
+      <div style={{
+        position: "absolute",
+        bottom: 40,
+        left: "50%",
+        transform: "translateX(-50%)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 8,
+        animation: "fade-in 1s ease 3s both",
+        zIndex: 2,
+      }}>
         <span style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: 10,
-          color: "var(--text-dim)",
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
+          fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--text-dim)",
+          letterSpacing: "0.15em", textTransform: "uppercase",
         }}>scroll</span>
         <div style={{
-          width: 1,
-          height: 40,
+          width: 1, height: 40,
           background: "linear-gradient(to bottom, var(--text-dim), transparent)",
           animation: "float 2s ease-in-out infinite",
         }} />
